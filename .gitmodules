@@ -1,0 +1,3 @@
+[submodule "Arduino-AVR-CMake"]
+	path = Arduino-AVR-CMake
+	url = https://github.com/tttapa/Arduino-AVR-CMake.git
