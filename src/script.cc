@@ -24,21 +24,21 @@ void ScriptRunner::process() {
         instr = m_code[m_ip++];
 
         switch (instr.opcode) {
-        case OPCODE_WAIT:
-            m_pause_end_ts = millis() + instr.imm_u;
-            break;
+            case OPCODE_WAIT:
+                m_pause_end_ts = millis() + instr.imm_u;
+                break;
 
-        case OPCODE_UPDATE_X_DIR:
-            m_engine->update_x_dir(instr.imm_s);
-            continue;
+            case OPCODE_UPDATE_X_DIR:
+                m_engine->update_x_dir(instr.imm_s);
+                continue;
 
-        case OPCODE_UPDATE_SPEED:
-            m_engine->update_speed(instr.imm_u);
-            continue;
+            case OPCODE_UPDATE_SPEED:
+                m_engine->update_speed(instr.imm_u);
+                continue;
 
-        case OPCODE_TOGGLE_REVERSE_MODE:
-            m_engine->toggle_reverse_mode();
-            continue;
+            case OPCODE_TOGGLE_REVERSE_MODE:
+                m_engine->toggle_reverse_mode();
+                continue;
         }
 
         break;

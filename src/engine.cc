@@ -46,8 +46,7 @@ void Engine::update_x_dir(int val) {
             digitalWrite(left_wheel.led_pin, LOW);
             digitalWrite(right_wheel.led_pin, LOW);
         }
-    }
-    else if (val > 0) {
+    } else if (val > 0) {
         update_wheel(left_wheel, m_speed, left_wheel.is_moving_backward, false);
 
         if (val < 224)
@@ -59,8 +58,7 @@ void Engine::update_x_dir(int val) {
             digitalWrite(left_wheel.led_pin, LOW);
             digitalWrite(right_wheel.led_pin, HIGH);
         }
-    }
-    else {
+    } else {
         update_wheel(right_wheel, m_speed, right_wheel.is_moving_backward, false);
 
         if (val > -224)
@@ -86,8 +84,7 @@ void Engine::toggle_reverse_mode() {
 
         digitalWrite(left_wheel.led_pin, LOW);
         digitalWrite(right_wheel.led_pin, LOW);
-    }
-    else {
+    } else {
         m_is_moving_backward = true;
 
         update_wheel(left_wheel, left_wheel.speed, false, false);
@@ -104,13 +101,11 @@ void Engine::update_wheel(Wheel& wheel, int speed, bool to_backward, bool force)
             digitalWrite(wheel.dir_pin_a, LOW);
             digitalWrite(wheel.dir_pin_b, LOW);
         }
-    }
-    else if (wheel.speed == 0 || wheel.is_moving_backward != to_backward || force) {
+    } else if (wheel.speed == 0 || wheel.is_moving_backward != to_backward || force) {
         if (to_backward) {
             digitalWrite(wheel.dir_pin_a, HIGH);
             digitalWrite(wheel.dir_pin_b, LOW);
-        }
-        else {
+        } else {
             digitalWrite(wheel.dir_pin_a, LOW);
             digitalWrite(wheel.dir_pin_b, HIGH);
         }
