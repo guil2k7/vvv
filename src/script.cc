@@ -12,15 +12,15 @@ using namespace vvv;
 using namespace vvv::engine_script;
 
 void ScriptRunner::process() {
-    if (m_ip >= m_code_len)
-        return;
-
     if (millis() < m_pause_end_ts)
         return;
 
     Instruction instr;
 
     for (;;) {
+        if (m_ip >= m_code_len)
+            break;
+
         instr = m_code[m_ip++];
 
         switch (instr.opcode) {

@@ -76,22 +76,17 @@ void Engine::update_x_dir(int val) {
 }
 
 void Engine::toggle_reverse_mode() {
+    m_is_moving_backward = !m_is_moving_backward;
+
+    update_wheel(left_wheel, left_wheel.speed, m_is_moving_backward, false);
+    update_wheel(right_wheel, right_wheel.speed, m_is_moving_backward, false);
+
     if (m_is_moving_backward) {
-        m_is_moving_backward = false;
-
-        update_wheel(left_wheel, left_wheel.speed, false, false);
-        update_wheel(right_wheel, right_wheel.speed, false, false);
-
-        digitalWrite(left_wheel.led_pin, LOW);
-        digitalWrite(right_wheel.led_pin, LOW);
-    } else {
-        m_is_moving_backward = true;
-
-        update_wheel(left_wheel, left_wheel.speed, true, false);
-        update_wheel(right_wheel, right_wheel.speed, true, false);
-
         digitalWrite(left_wheel.led_pin, HIGH);
         digitalWrite(right_wheel.led_pin, HIGH);
+    } else {
+        digitalWrite(left_wheel.led_pin, LOW);
+        digitalWrite(right_wheel.led_pin, LOW);
     }
 }
 

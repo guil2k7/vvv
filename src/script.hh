@@ -23,19 +23,19 @@ enum Opcode {
 
 union __attribute__((packed)) Instruction {
     static constexpr Instruction create(Opcode opcode, uint16_t imm) {
-        Instruction inst = {};
-        inst.opcode = opcode;
-        inst.imm_u = imm;
+        Instruction instr = {};
+        instr.opcode = opcode;
+        instr.imm_u = imm;
 
-        return inst;
+        return instr;
     }
 
     static constexpr Instruction create(Opcode opcode, int16_t imm) {
-        Instruction inst = {};
-        inst.opcode = opcode;
-        inst.imm_s = imm;
+        Instruction instr = {};
+        instr.opcode = opcode;
+        instr.imm_s = imm;
 
-        return inst;
+        return instr;
     }
 
     struct {

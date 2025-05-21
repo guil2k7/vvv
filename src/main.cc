@@ -12,13 +12,13 @@
 using namespace vvv;
 using namespace vvv::engine_script;
 
-static vvv::engine_script::Instruction const SCRIPT[] = {
+static Instruction const SCRIPT[] = {
     Instruction::create(OPCODE_UPDATE_X_DIR, 0),
     Instruction::create(OPCODE_UPDATE_SPEED, 100),
     Instruction::create(OPCODE_WAIT, 5000),
-    Instruction::create(OPCODE_UPDATE_X_DIR, 255),
+    Instruction::create(OPCODE_UPDATE_X_DIR, 127),
     Instruction::create(OPCODE_WAIT, 5000),
-    Instruction::create(OPCODE_UPDATE_X_DIR, -255),
+    Instruction::create(OPCODE_UPDATE_X_DIR, -127),
     Instruction::create(OPCODE_WAIT, 5000),
     Instruction::create(OPCODE_UPDATE_X_DIR, 0),
     Instruction::create(OPCODE_UPDATE_SPEED, 255),
@@ -50,15 +50,6 @@ void setup() {
 }
 
 void loop() {
-    /*
-    long x_val = static_cast<long>(analogRead(A3)) * 512L / 614L - 256L;
-
-    if (x_val > -10 && x_val < 10)
-        x_val = 0;
-
-    g_engine.update_x_dir(x_val);
-    */
-
     g_script_runner.process();
     delay(15);
 }
