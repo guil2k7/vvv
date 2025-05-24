@@ -9,82 +9,78 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "engine.hh"
+#include "Vehicle.hh"
 
-namespace vvv::engine_script {
+namespace VVV {
 
 // The instruction format uses only 2 bits for the opcode, which means there can only be 4 opcodes.
 enum Opcode {
     OPCODE_WAIT,
-    OPCODE_UPDATE_X_DIR,
-    OPCODE_UPDATE_SPEED,
+    OPCODE_SET_DIRECTION,
+    OPCODE_SET_SPEED,
     OPCODE_TOGGLE_REVERSE_MODE,
 };
 
 union __attribute__((packed)) Instruction {
-    static constexpr Instruction create(Opcode opcode, uint16_t imm) {
-        Instruction instr = {};
-        instr.opcode = opcode;
-        instr.imm_u = imm;
+    static constexpr Instruction createImmU(Opcode opcode, uint16_t imm) {
+        Instruction inst = {};
+        inst.opcode = opcode;
+        inst.immU = imm;
 
-        return instr;
+        return inst;
     }
 
-    static constexpr Instruction create(Opcode opcode, int16_t imm) {
-        Instruction instr = {};
-        instr.opcode = opcode;
-        instr.imm_s = imm;
+    static constexpr Instruction createImmS(Opcode opcode, int16_t imm) {
+        Instruction inst = {};
+        inst.opcode = opcode;
+        inst.immS = imm;
 
-        return instr;
+        return inst;
     }
 
     struct {
         Opcode opcode : 2;
-        uint16_t imm_u : 14;
+        uint16_t immU : 14;
     };
 
     struct {
         Opcode _opcode : 2;
-        int16_t imm_s : 14;
+        int16_t immS : 14;
     };
 };
 
 class ScriptRunner {
 public:
+    Vehicle* vehicle;
+
     constexpr ScriptRunner()
-        : m_engine{nullptr}
+        : vehicle{nullptr}
         , m_code{nullptr}
         , m_ip{0}
-        , m_code_len{0}
-        , m_pause_end_ts{0}
-    {}
-
+        , m_codeLength{0}
+        , m_pauseEndTs{0}
+    {
+    }
 
     inline void reset() {
         m_ip = 0;
-        m_pause_end_ts = 0;
+        m_pauseEndTs = 0;
     }
 
-    inline void set_code(Instruction const* code, size_t len) {
+    inline void setCode(Instruction const* code, size_t length) {
         m_ip = 0;
         m_code = code;
-        m_code_len = len;
-        m_pause_end_ts = 0;
-    }
-
-    inline void set_engine(Engine* engine) {
-        m_engine = engine;
-        reset();
+        m_codeLength = length;
+        m_pauseEndTs = 0;
     }
 
     void process();
 
 private:
-    Engine* m_engine;
     Instruction const* m_code;
     size_t m_ip;
-    size_t m_code_len;
-    size_t m_pause_end_ts;
+    size_t m_codeLength;
+    size_t m_pauseEndTs;
 };
 
-} // namespace vvv::engine_script
+} // namespace VVV::EngineScript

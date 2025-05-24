@@ -1,7 +1,6 @@
 set(VVV_SOURCE_FILES
-    engine.cc
-    main.cc
-    script.cc
+    Main.cc
+    Script.cc
 )
 
 add_executable(vvv ${VVV_SOURCE_FILES})

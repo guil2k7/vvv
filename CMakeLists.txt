@@ -6,4 +6,4 @@ include(Arduino-AVR-CMake/cmake/arduino_core.cmake)
 include(Arduino-AVR-CMake/cmake/arduino_hex.cmake)
 include(Arduino-AVR-CMake/cmake/arduino_upload.cmake)
 
-add_subdirectory(src)
+add_subdirectory(Source)

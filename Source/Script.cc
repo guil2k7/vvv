@@ -6,38 +6,34 @@
  *----------------------------------------------------------------*/
 
 #include <Arduino.h>
-#include "script.hh"
+#include "Script.hh"
 
-using namespace vvv;
-using namespace vvv::engine_script;
+using namespace VVV;
 
 void ScriptRunner::process() {
-    if (millis() < m_pause_end_ts)
+    if (millis() < m_pauseEndTs)
         return;
 
-    Instruction instr;
+    Instruction inst;
 
-    for (;;) {
-        if (m_ip >= m_code_len)
-            break;
+    while (m_ip < m_codeLength) {
+        inst = m_code[m_ip++];
 
-        instr = m_code[m_ip++];
-
-        switch (instr.opcode) {
+        switch (inst.opcode) {
             case OPCODE_WAIT:
-                m_pause_end_ts = millis() + instr.imm_u;
+                m_pauseEndTs = millis() + inst.immU;
                 break;
 
-            case OPCODE_UPDATE_X_DIR:
-                m_engine->update_x_dir(instr.imm_s);
+            case OPCODE_SET_DIRECTION:
+                vehicle->setDirection(inst.immS);
                 continue;
 
-            case OPCODE_UPDATE_SPEED:
-                m_engine->update_speed(instr.imm_u);
+            case OPCODE_SET_SPEED:
+                vehicle->setSpeed(inst.immU);
                 continue;
 
             case OPCODE_TOGGLE_REVERSE_MODE:
-                m_engine->toggle_reverse_mode();
+                vehicle->toggleReverseMode();
                 continue;
         }
 
